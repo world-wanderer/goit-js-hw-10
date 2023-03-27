@@ -18,6 +18,7 @@ const onSearchCountry = evt => {
   if (!nameCountry) {
     countryList.innerHTML = ``;
     countryInfo.innerHTML = ``;
+    return;
   }
 
   fetchCountries(nameCountry)
@@ -44,15 +45,10 @@ const onSearchCountry = evt => {
       }
     })
     .catch(error => {
-      if (error.message === '404') {
-        countryList.innerHTML = ``;
-        countryInfo.innerHTML = ``;
-        Notiflix.Notify.failure(
-          `Oops, there is no country with that name "${countryNameInput.value}".`
-        );
-        return;
-      }
-      return console.log(error);
+      countryList.innerHTML = '';
+      countryInfo.innerHTML = '';
+      console.log(error);
+      wrongName();
     });
 };
 
@@ -96,9 +92,9 @@ function errorManyContries() {
   );
 }
 
-// function wrongName() {
-//
-//   Notiflix.Notify.failure(
-//     `Oops, there is no country with that name "${countryNameInput.value}".`
-//   );
-// }
+function wrongName() {
+  Notiflix.Notify.failure(
+    `Oops, there is no country with that name "${countryNameInput.value}".`
+  );
+  return;
+}
